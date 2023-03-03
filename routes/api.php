@@ -14,4 +14,4 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('weather', [\App\Http\Controllers\Api\WeatherController::class, 'getWeather']);
+Route::get('issues', [\App\Http\Controllers\Api\IssueController::class, 'getIssue']);

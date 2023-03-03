@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Services\Weather\GetWeatherAction;
+use App\Services\Issue\GetWeatherAction;
 use Illuminate\Console\Command;
 
 class WeatherAddedCommand extends Command
