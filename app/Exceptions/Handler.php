@@ -3,6 +3,8 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -37,6 +39,16 @@ class Handler extends ExceptionHandler
     ];
 
     /**
+     * Failed response status
+     */
+    protected const STATUS_FAILURE = false;
+
+    /**
+     * Validation HTTP status code
+     */
+    protected const ERROR_CODE_VALIDATION = 422;
+
+    /**
      * Register the exception handling callbacks for the application.
      *
      * @return void
@@ -45,6 +57,28 @@ class Handler extends ExceptionHandler
     {
         $this->reportable(function (Throwable $e) {
             //
+        });
+
+        // Customize JSON response on validation failure
+        $this->renderable(function (ValidationException $e, $request) {
+            if ($request->is('api/*')) {
+                return response()->json([
+                    'success' => self::STATUS_FAILURE,
+                    'message' => $e->getMessage(),
+                    'data' => []
+                ], self::ERROR_CODE_VALIDATION);
+            }
+        });
+
+        // Customize JSON response on HttpException
+        $this->renderable(function (HttpException $e, $request) {
+            if ($request->is('api/*')) {
+                return response()->json([
+                    'success' => self::STATUS_FAILURE,
+                    'message' => $e->getMessage(),
+                    'data' => []
+                ], $e->getStatusCode());
+            }
         });
     }
 }

@@ -24,8 +24,7 @@ class IssueRequest extends FormRequest
     public function rules()
     {
         return [
-            'repo' => 'required|string',
-            'labels' => 'required|string',
+            'content' => 'required|string',
         ];
     }
 }

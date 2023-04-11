@@ -2,26 +2,22 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Exports\IssueExport;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\IssueRequest;
+use App\Interfaces\PDFGenerator;
 use App\Services\Issue\GetIssueAction;
-use Illuminate\Http\Response;
-use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Http\JsonResponse;
 
 class IssueController extends Controller
 {
-    public function getIssue(IssueRequest $request, GetIssueAction $action)
+    private PDFGenerator $generator;
+    public function __construct(PDFGenerator $generator)
     {
+        $this->generator = $generator;
+    }
 
-        $issueList = $action($request->validated());
-
-        if($issueList->count()) {
-            return Excel::download(new IssueExport($issueList), 'issues.xlsx', \Maatwebsite\Excel\Excel::XLSX);
-        }
-
-        return response([
-            'success' => false
-        ], Response::HTTP_NOT_FOUND);
+    public function getIssue(IssueRequest $request, GetIssueAction $action): JsonResponse
+    {
+        return $action($request->validated(), $this->generator);
     }
 }
