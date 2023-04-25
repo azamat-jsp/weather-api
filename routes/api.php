@@ -15,3 +15,4 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('issues', [\App\Http\Controllers\Api\IssueController::class, 'getIssue']);
+Route::get('networks', [\App\Http\Controllers\Api\SocialNetworkController::class, 'index']);
