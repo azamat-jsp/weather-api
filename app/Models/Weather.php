@@ -12,7 +12,6 @@ class Weather extends Model
     protected $table = 'weathers';
 
     protected $fillable = [
-        'temp', 'feels_like', 'temp_min',
-        'temp_max', 'pressure', 'humidity',
+        'name', 'temp_min', 'temp_max'
     ];
 }

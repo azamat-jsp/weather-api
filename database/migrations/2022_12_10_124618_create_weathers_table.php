@@ -15,12 +15,9 @@ return new class extends Migration
     {
         Schema::create('weathers', function (Blueprint $table) {
             $table->id();
-            $table->float('temp');
-            $table->float('feels_like');
+            $table->string('name');
             $table->float('temp_min');
             $table->float('temp_max');
-            $table->integer('pressure');
-            $table->integer('humidity');
             $table->timestamps();
         });
     }
