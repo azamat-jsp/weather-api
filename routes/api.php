@@ -17,3 +17,4 @@ use Illuminate\Support\Facades\Route;
 Route::get('issues', [\App\Http\Controllers\Api\IssueController::class, 'getIssue']);
 Route::get('networks', [\App\Http\Controllers\Api\SocialNetworkController::class, 'index']);
 Route::get('cooks', [\App\Http\Controllers\Api\CookController::class, 'index']);
+Route::resource('weathers', \App\Http\Controllers\Api\WeatherController::class);
