@@ -10,6 +10,21 @@ class WeatherController extends Controller
 {
     public function show(Weather $weather)
     {
-        return $weather;
+        $redis = Redis::connection();
+
+        $redis->set('user_details', json_encode([
+                'first_name' => 'Alex',
+                'last_name' => 'Richards'
+            ])
+        );
+
+        Redis::set('company', 'Webkul');
+        $user = Redis::get('company');
+
+
+        $response = $redis->get('user_details');
+        dd($response, $user);
+
+        return $response;
     }
 }
