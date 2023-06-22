@@ -58,3 +58,17 @@ services:
           - "6379:6379"
       networks:
           - laravel
+
+  nodeapp:
+      build:
+          context: ./docker/node
+          dockerfile: Dockerfile
+      ports:
+          - '81:5000'
+      command: "sh -c 'yarn install && yarn run pm2:flush && yarn run start:dev'"
+      env_file:
+          - .env
+      networks:
+          - laravel
+      depends_on:
+          - redis

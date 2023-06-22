@@ -18,10 +18,5 @@ use Illuminate\Support\Facades\Redis;
 Route::get('issues', [\App\Http\Controllers\Api\IssueController::class, 'getIssue']);
 Route::resource('weathers', \App\Http\Controllers\Api\WeatherController::class);
 
-Route::get('/publish', function () {
-    // ...
+Route::get('publish', [\App\Http\Controllers\Api\PublishController::class, 'publish']);
 
-    Redis::publish('test-channel', json_encode([
-        'name' => 'Adam Wathan'
-    ]));
-});
