@@ -3,19 +3,25 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Events\NewFoodOrderedEvent;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\IssueRequest;
+use App\Jobs\MakeApiRequest;
+use App\Services\Issue\GetIssueAction;
+use App\Services\PDF\SilkyWayPDFGenerator;
+use Illuminate\Http\JsonResponse;
 
 class PublishController extends Controller
 {
-    public function publish()
+    /**
+     * @param IssueRequest $request
+     * @param GetIssueAction $action
+     * @return JsonResponse
+     */
+    public function publish(IssueRequest $request, GetIssueAction $action): JsonResponse
     {
-        $order = [
-            'id' => 5,
-            'type' => 'User',
-            'status' => 'success'
-        ];
-        $payload = ['type' => 'NewOrder','order' => $order];
-        event(new NewFoodOrderedEvent($payload));
+        $generator = new SilkyWayPDFGenerator();
+
+        return $action($request->validated(), $generator);
+
     }
 }

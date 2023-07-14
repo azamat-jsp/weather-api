@@ -29,13 +29,5 @@ class RedisSubscribe extends Command
      */
     public function handle()
     {
-//        Redis::subscribe(['test-channel'], function ($message) {
-//            Log::channel('stderr')->info($message);
-//        });
-
-        Redis::psubscribe(['*'], function ($message, $channel) {
-            Log::channel('stderr')->info($message);
-            Log::channel('stderr')->info($channel);
-        });
     }
 }
